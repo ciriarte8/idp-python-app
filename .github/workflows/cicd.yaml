@@ -30,7 +30,7 @@ jobs:
           tags: ciriarte8/python-app:${{ env.COMMIT_ID }}
 
     outputs:
-      commit_id: ${{ steps.shorten_commit_id.outputs.commit_id }}
+      commit_id: ${{ env.COMMIT_ID }}
 
   cd:
     needs: ci
