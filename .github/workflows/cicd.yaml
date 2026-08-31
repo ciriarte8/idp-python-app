@@ -29,15 +29,35 @@ jobs:
           push: true
           tags: ciriarte8/python-app:${{ env.COMMIT_ID }}
 
+    outputs:
+      commit_id: ${{ steps.shorten_commit_id.outputs.commit_id }}
+
   cd:
     needs: ci
     runs-on: self-hosted
 
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Modify values file
+        shell: bash
+        run: |
+          echo ${{needs.ci.outputs.commit_id}}
+          curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 \
+            -o /tmp/yq
+          chmod +x /tmp/yq
+          sudo mv /tmp/yq /usr/local/bin/yq
+          yq -i '.image.tag = "${{needs.ci.outputs.commit_id}}"' charts/python-app/values.yaml
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: "Update values.yaml with commit ${{needs.ci.outputs.commit_id}}"
+
       - name: Install argocd
         shell: bash
         run: |
-          curl -ksSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+          curl -ksSL -o argocd-linux-amd64 https://argocd.test.com:59033/download/argocd-linux-amd64
           sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
           rm argocd-linux-amd64
 
