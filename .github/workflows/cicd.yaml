@@ -57,7 +57,7 @@ jobs:
       - name: Install argocd
         shell: bash
         run: |
-          curl -ksSL -o argocd-linux-amd64 https://argocd.test.com:59033/download/argocd-linux-amd64
+          curl -ksSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
           sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
           rm argocd-linux-amd64
 
