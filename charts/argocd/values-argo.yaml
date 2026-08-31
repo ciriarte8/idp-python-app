@@ -6,12 +6,8 @@ controller:
 
 server:
   replicas: 1
-
   ingress:
-    enabled: true
-    ingressClassName: cloud-provider-kind
-    tls: true
-    https: false
+    enabled: false
 
 repoServer:
   replicas: 1
@@ -24,4 +20,4 @@ global:
 
 configs:
   params:
-    server.insecure: true
+    server.insecure: "true"
