@@ -2,7 +2,7 @@ replicaCount: 1
 image:
   repository: ciriarte8/python-app
   pullPolicy: IfNotPresent
-  tag: ""
+  tag: "a62e54"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
